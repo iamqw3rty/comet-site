@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comet</title>
+    
+    <link rel="icon" href="REDESIGNArtboard_263x.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            /* Core Brand Colors */
+            --accent-red: #FF4A37;
+            --accent-orange: #FFB137;
+            
+            /* Default (Dark Mode) Variables */
+            --bg-main: #262626;
+            --text-main: #DBDBDB;
+            --text-sub: rgba(219, 219, 219, 0.8);
+            
+            --btn-primary-bg: #DBDBDB;
+            --btn-primary-text: #262626;
+            
+            --btn-secondary-bg: #333333;
+            --btn-secondary-text: #DBDBDB;
+            
+            --header-bg: rgba(38, 38, 38, 0.95);
+            
+            --transition: all 0.3s ease;
+        }
+
+        /* Light Mode Overrides */
+        [data-theme="light"] {
+            --bg-main: #DBDBDB;
+            --text-main: #262626;
+            --text-sub: rgba(38, 38, 38, 0.8);
+            
+            /* Buttons invert colors in light mode */
+            --btn-primary-bg: #262626;
+            --btn-primary-text: #DBDBDB;
+            
+            --btn-secondary-bg: #BCBCBC;
+            --btn-secondary-text: #262626;
+            
+            --header-bg: rgba(219, 219, 219, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Special animation for footer to maintain original opacity preference */
+        @keyframes fadeInUpFooter {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 0.7; /* Matches your original design */
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Header / Top Bar --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: background-color 0.3s ease;
+            /* Header stays static (no animation) */
+        }
+
+        .logo-container {
+            height: 70px; 
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            /* Default (Dark Mode): Screen hides the black background */
+            mix-blend-mode: screen; 
+            transition: mix-blend-mode 0.3s ease;
+        }
+
+        /* Light Mode Logo Fix */
+        [data-theme="light"] .logo-container img {
+            mix-blend-mode: normal; 
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-orange);
+            background-color: rgba(128, 128, 128, 0.1);
+            transform: rotate(15deg);
+        }
+
+        .btn-order {
+            background-color: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-order:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* --- Main Hero Section --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 1rem 2rem 1rem;
+            
+            /* Animation Applied Here */
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: var(--text-main);
+        }
+
+        .highlight-comet {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-right: 0.2em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .btn-discord {
+            background-color: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-discord:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0, 0.1);
+        }
+
+        .btn-support {
+            background-color: var(--btn-secondary-bg);
+            color: var(--btn-secondary-text);
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-support:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        .heart-icon {
+            color: var(--accent-red);
+        }
+
+        /* --- Footer (Icons) --- */
+        footer {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            
+            /* Animation Applied Here */
+            opacity: 0;
+            animation: fadeInUpFooter 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        footer a {
+            color: var(--text-main);
+            transition: var(--transition);
+            display: flex;
+        }
+
+        footer a:hover {
+            opacity: 1; /* This will make it fully opaque on hover */
+            color: var(--accent-orange);
+            transform: scale(1.1);
+        }
+
+        /* --- Responsive Tweaks --- */
+        @media (max-width: 600px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+            .logo-container {
+                height: 50px;
+            }
+            .cta-container {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
+            }
+            .btn-discord, .btn-support {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="REDESIGNArtboard_263x.png" alt="Comet Logo">
+        </div>
+        <div class="header-actions">
+            <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+            
+            <a href="#" class="btn-order">
+                Order 
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <h1>a design server<br> for the <span class="highlight-comet">modern era</span></h1>
+        
+        <p class="hero-subtitle">
+            A comet is a spectacular object. Comet makes spectacular assets.<br> 
+            It's that simple.
+        </p>
+
+        <div class="cta-container">
+            <a href="https://discord.gg/ksnau5PKT8" class="btn-discord">
+                Join our Discord! 
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://discord.gg/ksnau5PKT8" aria-label="Discord">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612"/>
+            </svg>
+        </a>
+
+        <a href="mailto:hi@usecmt.xyz" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+            </svg>
+        </a>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('theme-btn');
+        const body = document.body;
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            body.setAttribute('data-theme', currentTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+
+</body>
+</html>
