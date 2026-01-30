@@ -42,7 +42,7 @@
             --btn-secondary-bg: #333333;
             --btn-secondary-text: #DBDBDB;
 
-            --header-bg: rgba(38, 38, 38, 0.95);
+            --header-bg: rgba(38, 38, 38, 0.05);
 
             --transition: all 0.3s ease;
         }
@@ -60,7 +60,7 @@
             --btn-secondary-bg: #BCBCBC;
             --btn-secondary-text: #262626;
 
-            --header-bg: rgba(219, 219, 219, 0.95);
+            --header-bg: rgba(219, 219, 219, 0.05);
         }
 
         * {
@@ -78,6 +78,23 @@
             flex-direction: column;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Ensure content is above canvas */
+        main,
+        footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* --- Animations --- */
@@ -117,7 +134,7 @@
             top: 0;
             width: 100%;
             background-color: var(--header-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             z-index: 100;
             transition: background-color 0.3s ease;
             /* Header stays static (no animation) */
@@ -336,118 +353,244 @@
 
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="REDESIGNArtboard_263x.png" alt="Comet Logo">
-        </div>
-        <div class="header-actions">
-            <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-            </button>
+    <body>
+        <canvas id="bg-canvas"></canvas>
 
-            <a href="https://discord.gg/ksnau5PKT8" class="btn-order">
-                Order
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
+        <header>
+            <div class="logo-container">
+                <img src="REDESIGNArtboard_263x.png" alt="Comet Logo">
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+
+                <a href="https://discord.gg/ksnau5PKT8" class="btn-order">
+                    Order
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <h1>graphics for the<br><span class="highlight-comet">modern era</span></h1>
+
+            <p class="hero-subtitle">
+                Trying to get something cool made for your server doesn't have to be complicated. With Comet, it never
+                is.
+            </p>
+
+            <div class="cta-container">
+                <a href="https://discord.gg/ksnau5PKT8" class="btn-discord">
+                    Join our Discord!
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <a href="https://discord.gg/ksnau5PKT8" aria-label="Discord">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
                 </svg>
             </a>
-        </div>
-    </header>
 
-    <main>
-        <h1>graphics for the<br><span class="highlight-comet">modern era</span></h1>
-
-        <p class="hero-subtitle">
-            Trying to get something cool made for your server doesn't have to be complicated. With Comet, it never is.
-        </p>
-
-        <div class="cta-container">
-            <a href="https://discord.gg/ksnau5PKT8" class="btn-discord">
-                Join our Discord!
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
+            <a href="mailto:hi@usecmt.xyz" aria-label="Email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" />
                 </svg>
             </a>
-        </div>
-    </main>
+        </footer>
 
-    <footer>
-        <a href="https://discord.gg/ksnau5PKT8" aria-label="Discord">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
-                <path
-                    d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.04.04 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032q.003.022.021.037a13.3 13.3 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019q.463-.63.818-1.329a.05.05 0 0 0-.01-.059l-.018-.011a9 9 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019q.127-.095.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.05.05 0 0 1 .053.007q.121.1.248.195a.05.05 0 0 1-.004.085 8 8 0 0 1-1.249.594.05.05 0 0 0-.03.03.05.05 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.001-2.02.05.05 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.03.03 0 0 0-.02-.019m-8.198 7.307c-.789 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612m5.316 0c-.788 0-1.438-.724-1.438-1.612s.637-1.613 1.438-1.613c.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612" />
-            </svg>
-        </a>
+        <script>
+            const toggleBtn = document.getElementById('theme-btn');
+            const body = document.body;
 
-        <a href="mailto:hi@usecmt.xyz" aria-label="Email">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" />
-            </svg>
-        </a>
-    </footer>
-
-    <script>
-        const toggleBtn = document.getElementById('theme-btn');
-        const body = document.body;
-
-        // Theme Handling
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme) {
-            body.setAttribute('data-theme', currentTheme);
-        }
-
-        toggleBtn.addEventListener('click', () => {
-            if (body.getAttribute('data-theme') === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
+            // Theme Handling
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                body.setAttribute('data-theme', currentTheme);
             }
-        });
 
-        // Animation Visibility Logic
-        document.addEventListener("DOMContentLoaded", () => {
-            const animatedElements = document.querySelectorAll("main, footer");
-
-            const startAnimations = () => {
-                // If tab is currently active (visible)
-                if (!document.hidden) {
-                    animatedElements.forEach(el => {
-                        el.style.animationPlayState = "running";
-                    });
-                    // Clean up listener so it doesn't fire repeatedly
-                    document.removeEventListener("visibilitychange", startAnimations);
+            toggleBtn.addEventListener('click', () => {
+                if (body.getAttribute('data-theme') === 'light') {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
                 }
-            };
+            });
 
-            // Check immediately on load (for when user opens link directly)
-            startAnimations();
+            // Animation Visibility Logic
+            document.addEventListener("DOMContentLoaded", () => {
+                const animatedElements = document.querySelectorAll("main, footer");
 
-            // Check when tab state changes (for when user opens in background)
-            document.addEventListener("visibilitychange", startAnimations);
-        });
-    </script>
+                const startAnimations = () => {
+                    // If tab is currently active (visible)
+                    if (!document.hidden) {
+                        animatedElements.forEach(el => {
+                            el.style.animationPlayState = "running";
+                        });
+                        // Clean up listener so it doesn't fire repeatedly
+                        document.removeEventListener("visibilitychange", startAnimations);
+                    }
+                };
 
-</body>
+                // Check immediately on load (for when user opens link directly)
+                startAnimations();
+
+                // Check when tab state changes (for when user opens in background)
+                document.addEventListener("visibilitychange", startAnimations);
+
+                // Trigger background init
+                initBackground();
+            });
+
+            /* --- Reactive Background --- */
+            function initBackground() {
+                const canvas = document.getElementById('bg-canvas');
+                const ctx = canvas.getContext('2d');
+                let width, height;
+                let particles = [];
+                let mouse = { x: -1000, y: -1000 };
+
+                // Colors
+                let particleColor = 'rgba(219, 219, 219, 0.4)';
+                let lineColor = 'rgba(219, 219, 219, 0.1)';
+
+                const updateColors = () => {
+                    const isLight = document.body.getAttribute('data-theme') === 'light';
+                    // Matching the CSS variables roughly
+                    if (isLight) {
+                        // Darker particles for light mode
+                        particleColor = 'rgba(38, 38, 38, 0.4)';
+                        lineColor = 'rgba(38, 38, 38, 0.1)';
+                    } else {
+                        // Light particles for dark mode
+                        particleColor = 'rgba(219, 219, 219, 0.4)';
+                        lineColor = 'rgba(219, 219, 219, 0.1)';
+                    }
+                };
+
+                // Initial color set
+                updateColors();
+
+                // Observe theme changes
+                const observer = new MutationObserver(updateColors);
+                observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
+
+                const resizeCanvas = () => {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                    canvas.width = width;
+                    canvas.height = height;
+                    initParticles();
+                };
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        this.vx = (Math.random() - 0.5) * 0.5;
+                        this.vy = (Math.random() - 0.5) * 0.5;
+                        this.size = Math.random() * 2 + 1;
+                    }
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+
+                        if (this.x < 0 || this.x > width) this.vx *= -1;
+                        if (this.y < 0 || this.y > height) this.vy *= -1;
+                    }
+                    draw() {
+                        ctx.fillStyle = particleColor;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                function initParticles() {
+                    particles = [];
+                    // Density based on screen size
+                    const particleCount = Math.floor((width * height) / 10000);
+                    for (let i = 0; i < particleCount; i++) {
+                        particles.push(new Particle());
+                    }
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                        particles[i].draw();
+
+                        // Connect particles
+                        for (let j = i; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x;
+                            const dy = particles[i].y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+
+                            if (dist < 120) {
+                                ctx.beginPath();
+                                ctx.strokeStyle = lineColor;
+                                ctx.lineWidth = 1 - dist / 120;
+                                ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.stroke();
+                            }
+                        }
+
+                        // Mouse interaction
+                        const dx = particles[i].x - mouse.x;
+                        const dy = particles[i].y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = particleColor;
+                            ctx.lineWidth = (1 - dist / 150) * 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                    requestAnimationFrame(animate);
+                }
+
+                window.addEventListener('resize', resizeCanvas);
+                window.addEventListener('mousemove', e => {
+                    mouse.x = e.clientX;
+                    mouse.y = e.clientY;
+                });
+
+                resizeCanvas();
+                animate();
+            }
+        </script>
+
+    </body>
 
 </html>
-
-
-
